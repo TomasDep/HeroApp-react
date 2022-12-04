@@ -1,12 +1,15 @@
+import { useMemo } from "react";
+
 import { getHeroesByPublisher } from "../helpers";
-import { IHeroes } from "../interfaces/heroes.interface";
+import { IHeroes } from "../interfaces";
+import { HeroCard } from "./";
 
 export const HeroList = ({ publisher }: { publisher: string }) => {
-  const heroes = getHeroesByPublisher(publisher);
+  const heroes = useMemo(() => getHeroesByPublisher(publisher), [publisher]);
   return (
-    <ul>
+    <ul className="row row-cols-1 row-cols-md-3 g-3">
       {heroes.map((hero: IHeroes) => {
-        return <li key={hero?.id}>{hero?.superhero}</li>;
+        return <HeroCard key={hero?.id} {...hero} />;
       })}
     </ul>
   );
